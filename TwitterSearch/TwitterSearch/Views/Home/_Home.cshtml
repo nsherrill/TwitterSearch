@@ -1,0 +1,67 @@
+﻿@model  TwitterSearch.Models.SearchResultModel
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div>
+        <h2>Twitter searcher</h2>
+
+        <input type="text" id="txt" name="textToSearch" value="@Model.SearchText" />
+        <input type="submit" />
+
+    </div>
+    if (Model != null
+        && Model.Error != null
+        && Model.Error.Length > 0)
+    {
+        <div>
+            <h4>@Model.Error</h4>
+        </div>
+    }
+
+    if (Model != null
+        && Model.Items != null)
+    {
+        <div>
+            <h2>Search Results</h2>
+
+            @if (Model.Items.Length == 0)
+            {
+                <div><h4>No results found</h4></div>
+            }
+            else
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            UserName
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Text
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.CreateDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Text)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+        </div>
+    }
+}
+
+
